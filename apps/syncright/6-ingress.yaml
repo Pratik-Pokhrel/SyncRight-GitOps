@@ -1,0 +1,29 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: syncright
+  namespace: syncright
+  annotations:
+    cert-manager.io/cluster-issuer: selfsigned
+    nginx.ingress.kubernetes.io/proxy-body-size: "10m"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "3600"
+spec:
+  ingressClassName: nginx
+  tls:
+    - hosts:
+        - syncright.192.168.56.11.nip.io
+      secretName: syncright-tls
+  rules:
+    - host: syncright.192.168.56.11.nip.io
+      http:
+        paths:
+          - path: /api
+            pathType: Prefix
+            backend:
+              service: { name: backend, port: { number: 8000 } }
+          - path: /
+            pathType: Prefix
+            backend:
+              service: { name: frontend, port: { number: 80 } }
+
