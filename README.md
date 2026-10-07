@@ -39,10 +39,6 @@ SyncRight-GitOps/
 | 5 | NetworkPolicies, adversary testing, failure testing | 
 | 6 | Azure AKS and multi-cluster GitOps |
 
-## Security notes
-
-- Never commit a plain `kind: Secret`. Seal it with `kubeseal` first.
-- The Sealed Secrets private key backup is kept outside this repo.
 
 ## License
 
