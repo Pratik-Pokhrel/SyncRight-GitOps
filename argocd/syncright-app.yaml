@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: syncright
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/Pratik-Pokhrel/SyncRight-GitOps
+    targetRevision: main
+    path: apps/syncright
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: syncright
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
+    # automated:
+    #   prune: true
+    #   selfHeal: true
