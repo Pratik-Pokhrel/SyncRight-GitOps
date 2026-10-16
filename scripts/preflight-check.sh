@@ -1,8 +1,9 @@
-#!/usr/bin/bash
+#!usr/bin/env bash
 
 # Owner : Pratik Pokhrel
 # Description : This script confirms that this node is actually ready for kubeadm
 # Date Created : 2026/09/29
+# Last Date Modified : 2026/09/29
 
 set -euo pipefail
 PEER_IP="${1:?Usage: ./preflight-check.sh <peer-host-only-ip>}"
@@ -11,7 +12,7 @@ FAIL=0
 
 check() {
 	local desc="$1"; local cmd="$2"
-	if eval "$cmd" &>/dev/null; 
+	if eval "$cmd" &>/dev/null;
 	then
 		echo " [OK] $desc"
 	else
@@ -42,5 +43,3 @@ else
 	echo "One or more checks failed, fix the items before running kubeadm"
 	exit 1
 fi
-
-
