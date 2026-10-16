@@ -11,12 +11,13 @@ spec:
     - port: 27017
       name: mongo
 ---
-
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   name: mongo
   namespace: syncright
+  annotations:
+    argocd.argoproj.io/sync-options: Prune=false
 spec:
   serviceName: mongo
   replicas: 1
@@ -49,20 +50,22 @@ spec:
             limits: { cpu: 1000m, memory: 768Mi }
           readinessProbe:
             exec:
-              command: ["mongosh", "--quiet", "--eval", "db.adminCommand('ping')"]
+              command:
+                ["mongosh", "--quiet", "--eval", "db.adminCommand('ping')"]
             initialDelaySeconds: 15
             periodSeconds: 15
             timeoutSeconds: 10
           livenessProbe:
             exec:
-              command: ["mongosh", "--quiet", "--eval", "db.adminCommand('ping')"]
+              command:
+                ["mongosh", "--quiet", "--eval", "db.adminCommand('ping')"]
             initialDelaySeconds: 60
             periodSeconds: 30
             timeoutSeconds: 10
             failureThreshold: 5
           volumeMounts:
             - name: data
-              mountPath: /data/db  
+              mountPath: /data/db
   volumeClaimTemplates:
     - metadata:
         name: data
@@ -72,5 +75,3 @@ spec:
         resources:
           requests:
             storage: 2Gi
-
-
