@@ -1,0 +1,20 @@
+applicationSet:
+  replicas: 0
+dex:
+  enabled: false
+notifications:
+  enabled: false
+repoServer:
+  livenessProbe:
+    timeoutSeconds: 5
+  readinessProbe:
+    timeoutSeconds: 5
+server:
+  livenessProbe:
+    timeoutSeconds: 5
+  readinessProbe:
+    timeoutSeconds: 5
+  service:
+    nodePortHttp: 30081
+    nodePortHttps: 30444
+    type: NodePort
